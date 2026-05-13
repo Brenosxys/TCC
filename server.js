@@ -31,10 +31,12 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
-app.get('/artistas', (req, res) => {
-    const sql = "SELECT * FROM artistas";
-    db.query(sql, (err, result) => {
-        if (err) return res.status(500).json(err);
-        return res.status(200).json(result);
-    });
-});
+const artistasRoutes = require('./routes/artistasRoutes');
+app.use('/artistas', artistasRoutes(db));
+
+const portfolioRoutes = require('./routes/portfolioRoutes');
+app.use('/portfolio', portfolioRoutes(db));
+
+
+const seguidoresRoutes = require('./routes/seguidoresRoutes');
+app.use('/seguidores', seguidoresRoutes(db));
