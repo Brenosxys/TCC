@@ -3,22 +3,22 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-    // 1. Rota para enviar uma mensagem (POST)
+    // POST - Enviar (Já funcionando)
     router.post('/', (req, res) => {
-        const { id_remetente, id_destinatario, conteudo, id_pedido } = req.body;
-        const sql = "INSERT INTO mensagens (id_remetente, id_destinatario, conteudo, id_pedido) VALUES (?, ?, ?, ?)";
-        
-        db.query(sql, [id_remetente, id_destinatario, conteudo, id_pedido], (err, result) => {
+        const { id_remetente, id_destinatario, conteudo } = req.body;
+        const sql = "INSERT INTO mensagens (id_remetente, id_destinatario, conteudo) VALUES (?, ?, ?)";
+        db.query(sql, [id_remetente, id_destinatario, conteudo], (err, result) => {
             if (err) return res.status(500).json(err);
-            res.status(201).json({ message: 'Mensagem enviada!', id_mensagem: result.insertId });
+            res.status(201).json({ message: "Mensagem enviada!" });
         });
     });
 
-    // 2. Rota para ler o histórico de mensagens de um pedido (GET)
-    router.get('/pedido/:id', (req, res) => {
-        const id = req.params.id;
-        const sql = "SELECT * FROM mensagens WHERE id_pedido = ? ORDER BY data_envio ASC";
-        
+    // GET - Buscar mensagens (Onde o 404 está ocorrendo)
+    // ATENÇÃO: O ":" é obrigatório para o Express entender que o ID é variável
+    router.get('/:id_destinatario', (req, res) => {
+        const id = req.params.id_destinatario;
+        const sql = "SELECT * FROM mensagens WHERE id_destinatario = ?";
+
         db.query(sql, [id], (err, result) => {
             if (err) return res.status(500).json(err);
             res.status(200).json(result);

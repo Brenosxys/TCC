@@ -54,3 +54,10 @@ app.use('/commissions', commissionsRoutes(db));
 const mensagensRoutes = require('./routes/mensagensRoutes');
 // ...
 app.use('/mensagens', mensagensRoutes(db));
+
+const categoriasRoutes = require('./routes/categoriasRoutes');
+const midiasPerfilRoutes = require('./routes/midiasPerfilRoutes');
+
+// ... (abaixo das outras rotas)
+app.use('/categorias', categoriasRoutes(db));
+app.use('/midias-perfil', midiasPerfilRoutes(db));
