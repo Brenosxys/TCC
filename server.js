@@ -40,3 +40,17 @@ app.use('/portfolio', portfolioRoutes(db));
 
 const seguidoresRoutes = require('./routes/seguidoresRoutes');
 app.use('/seguidores', seguidoresRoutes(db));
+
+const avaliacoesRoutes = require('./routes/avaliacoesRoutes');
+app.use('/avaliacoes', avaliacoesRoutes(db));
+
+// No topo com os outros imports
+const commissionsRoutes = require('./routes/commissionsRoutes');
+
+// Onde ativa as rotas
+app.use('/commissions', commissionsRoutes(db));
+
+
+const mensagensRoutes = require('./routes/mensagensRoutes');
+// ...
+app.use('/mensagens', mensagensRoutes(db));
